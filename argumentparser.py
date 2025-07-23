@@ -43,14 +43,14 @@ class ArgumentParser:
         self.parser.add_argument('--learning_rate', type=float, default=0.1, help='Taxa de aprendizado do XGBoost')
 
     def setLightGBMArguments(self):
-        self.parser.add_argument('--max_depth', type=int, default=6)
-        self.parser.add_argument('--n_estimators', type=int, default=300)
-        self.parser.add_argument('--learning_rate', type=float, default=0.1)
+        self.parser.add_argument('--lgbmmax_depth', type=int, default=6)
+        self.parser.add_argument('--lgbmn_estimators', type=int, default=300)
+        self.parser.add_argument('--lgbmlearning_rate', type=float, default=0.1)
 
     def setCatBoostArguments(self):
-        self.parser.add_argument('--max_depth', type=int, default=6)
-        self.parser.add_argument('--n_estimators', type=int, default=300)
-        self.parser.add_argument('--learning_rate', type=float, default=0.1)
+        self.parser.add_argument('--catmax_depth', type=int, default=6)
+        self.parser.add_argument('--catn_estimators', type=int, default=300)
+        self.parser.add_argument('--catlearning_rate', type=float, default=0.1)
 
     def setAllAlgorithmsArguments(self):
         self.parser.add_argument('-RF', dest='random_forest', action="store_true", required=False, help="use random forest?")

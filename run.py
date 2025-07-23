@@ -22,7 +22,11 @@ def returnTrueIfNoAlgorithmWasSelected(args):
                     if(args.naive_bayes == False):
                         if(args.random_forest == False):
                             if(args.svm == False):
-                                if(args.xgboost == False):  # ← adicionado
+                                if(args.xgboost == False):  
+                                    if(args.lightgbm == False):
+                                        if(args.catboost == False):
+                                            # No algorithm was selected
+                                            return True
                                     return True
     return False
 
@@ -139,6 +143,38 @@ def computeXgboostCrossValidation(args, dict_algorithms):
     if(args.debug):
         print("ok!")
 
+def computeLightGBM(args, dict_algorithms):
+    if(args.debug):
+        print("Running LightGBM...", end='')
+    model = LightGBM(args)
+    dict_algorithms["lightgbm"] = model.compute()
+    if(args.debug):
+        print("ok!")
+
+def computeLightGBMCrossValidation(args, dict_algorithms):
+    if(args.debug):
+        print("Running LightGBM...", end='')
+    model = LightGBM(args)
+    dict_algorithms["lightgbm"] = model.computeCrossValidation()
+    if(args.debug):
+        print("ok!")
+
+def computeCatBoost(args, dict_algorithms):
+    if(args.debug):
+        print("Running CatBoost...", end='')
+    model = CatBoost(args)
+    dict_algorithms["catboost"] = model.compute()
+    if(args.debug):
+        print("ok!")
+
+def computeCatBoostCrossValidation(args, dict_algorithms):        
+    if(args.debug):
+        print("Running CatBoost...", end='')
+    model = CatBoost(args)
+    dict_algorithms["catboost"] = model.computeCrossValidation()
+    if(args.debug):
+        print("ok!")
+
 def computeAllAlgorithms(args, dict_algorithms):
     computeDecisionTree(args, dict_algorithms)
     computeRandomForest(args, dict_algorithms)
@@ -146,7 +182,9 @@ def computeAllAlgorithms(args, dict_algorithms):
     computeNaiveBayes(args, dict_algorithms)
     computeKNN(args, dict_algorithms)
     computeSVM(args, dict_algorithms)
-    computeXgboost(args, dict_algorithms)  
+    computeXgboost(args, dict_algorithms)
+    computeLightGBM(args, dict_algorithms)
+    computeCatBoost(args, dict_algorithms)  
 
 def computeAllAlgorithmsCrossValidation(args, dict_algorithms):
     computeDecisionTreeCrossValidation(args, dict_algorithms)
@@ -156,6 +194,8 @@ def computeAllAlgorithmsCrossValidation(args, dict_algorithms):
     computeKNNCrossValidation(args, dict_algorithms)
     computeSVMCrossValidation(args, dict_algorithms)
     computeXgboostCrossValidation(args, dict_algorithms)
+    computeLightGBMCrossValidation(args, dict_algorithms)
+    computeCatBoostCrossValidation(args, dict_algorithms)
 
 def saveROCCurveForEachAlgorithm(algorithms):
     from datetime import datetime
@@ -211,6 +251,10 @@ def compute(args):
         
         if(args.xgboost):  
             computeXgboost(args, dict_algorithms)
+        if(args.lightgbm):
+            computeLightGBM(args, dict_algorithms)
+        if(args.catboost): 
+            computeCatBoost(args, dict_algorithms)
 
     if(args.sort_by_time):
         dict_algorithms_sorted = {k: v for k, v in sorted(dict_algorithms.items(), key=lambda item: item[1][2])}
@@ -264,6 +308,10 @@ def computeCrossValidation(args):
 
         if(args.xgboost):
             computeXgboostCrossValidation(args, dict_algorithms)
+        if(args.lightgbm):
+            computeLightGBMCrossValidation(args, dict_algorithms)
+        if(args.catboost):
+            computeCatBoostCrossValidation(args, dict_algorithms)
 
     print(dict_algorithms)
 

@@ -24,7 +24,7 @@ class CatBoost(ClassificationModel):
 
         XTrain, XTest, yTrain, yTest = ClassificationModel.preprocessData(self.args, True)
 
-        classifier = CatBoost.computeModel(XTrain, yTrain, self.args.max_depth, self.args.n_estimators, self.args.learning_rate)
+        classifier = CatBoost.computeModel(XTrain, yTrain, self.args.catmax_depth, self.args.catn_estimators, self.args.catlearning_rate)
         yPred = ClassificationModel.predictModel(classifier, XTest)
         confusionMatrix = ClassificationModel.getConfusionMatrix(yPred, yTest)
         rocCurve = ClassificationModel.getRocCurve(yPred, yTest)

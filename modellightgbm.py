@@ -23,7 +23,7 @@ class LightGBM(ClassificationModel):
 
         XTrain, XTest, yTrain, yTest = ClassificationModel.preprocessData(self.args, True)
 
-        classifier = LightGBM.computeModel(XTrain, yTrain, self.args.max_depth, self.args.n_estimators, self.args.learning_rate)
+        classifier = LightGBM.computeModel(XTrain, yTrain, self.args.lgbmmax_depth, self.args.lgbmn_estimators, self.args.lgbmlearning_rate)
         yPred = ClassificationModel.predictModel(classifier, XTest)
         confusionMatrix = ClassificationModel.getConfusionMatrix(yPred, yTest)
         rocCurve = ClassificationModel.getRocCurve(yPred, yTest)
